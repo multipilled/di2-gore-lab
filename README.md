@@ -4,6 +4,8 @@ A personal test bed. It recreates Dead Island 2's gore system (internally "Splat
 
 **Personal testing only.** `game/assets/di2/` and `extracted/` hold content pulled from your own DI2 install. Don't share them or commit them. The `.gitignore` already excludes them. The Rust core and the tools are original code.
 
+**Progress: about 46% of the goal** (a fully playable showcase build on Horde map NH_04 with the full UI, gameplay, gore, every zombie variant and the whole map rendered as in game). Milestone table under [Status](#status).
+
 ## Run
 
 | | |
