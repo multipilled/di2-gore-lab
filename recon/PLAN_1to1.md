@@ -1,6 +1,6 @@
 # 1:1 work list (approved by the user: "Yes do everything as 1 to 1 with DI2 as possible")
 
-**Top priority (user, 2026-10-07): zombies must look, take damage and gore exactly like DI2 — full FLESH replication.**
+**Top priority: zombies must look, take damage and gore exactly like DI2 — full FLESH replication.**
 
 Every item comes from the user's own DI2 install (static extraction only; the game is never launched).
 
