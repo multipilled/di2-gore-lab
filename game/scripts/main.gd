@@ -86,9 +86,16 @@ func _ready() -> void:
 	hud.player = player
 	hud.progression = progression
 	layer.add_child(hud)
-	for i in 5:
-		var a := TAU * i / 5.0
-		spawn_zombie(Vector3(cos(a) * 5.0, 0.1, sin(a) * 5.0 - 4.0), archetypes[archetype_i])
+	if _horde_requested():
+		var hd = load("res://scripts/horde_director.gd").new()
+		hd.main = self
+		hd.use_zombies = true
+		hd.name = "HordeDirector"
+		add_child(hd)
+	else:
+		for i in 5:
+			var a := TAU * i / 5.0
+			spawn_zombie(Vector3(cos(a) * 5.0, 0.1, sin(a) * 5.0 - 4.0), archetypes[archetype_i])
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--weapontest="):
 			var wt: Node = load("res://scripts/autotest_weapons.gd").new()
@@ -130,6 +137,20 @@ func _ready() -> void:
 			add_child(pt)
 			return
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _horde_requested() -> bool:
+	# Existing autotests keep the ring of five Walkers. The horde runs for an explicit --horde
+	# or the full NH_04 map, not for nh04_street.
+	var args := OS.get_cmdline_user_args()
+	for arg in args:
+		for flag in ["--weapontest=", "--fleshtest=", "--combattest=", "--autotest=", "--danitest=", "--particletest=", "--hordetest="]:
+			if arg.begins_with(flag):
+				return false
+	for horde_arg in args:
+		if horde_arg == "--horde" or horde_arg == "--map=nh04":
+			return true
+	return false
 
 
 func _build_arena() -> void:

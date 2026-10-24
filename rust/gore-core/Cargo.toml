@@ -5,7 +5,18 @@ edition.workspace = true
 version.workspace = true
 license.workspace = true
 
+[features]
+default = []
+# Runs the tests that need gitignored DI2 data (game/assets/di2/..., game/data/archetypes.json) and
+# compiles the bodies in. Without it those tests are ignored ("needs game data"); with it they fail
+# loudly when the data is missing.
+game-data = []
+
 [dependencies]
 glam = { version = "0.34", features = ["serde"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+
+[[bin]]
+name = "horde_report"
+path = "src/horde_report_main.rs"

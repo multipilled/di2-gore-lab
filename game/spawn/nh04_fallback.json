@@ -1,0 +1,892 @@
+[
+  {
+    "Type": "StandInLayout_C",
+    "Name": "INVENTED_STAND_IN",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "StandIn": true,
+      "Note": "Invented stand-in layout. Positions and spawn tables are made up. Not extracted from Dead Island 2.",
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.1"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "INVENTED_STAND_IN_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 0,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "HordeDirectorBudget",
+    "Name": "Budget",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "MaxActive": 8,
+      "MinSpawnDistance": 8.0,
+      "MaxSpawnDistance": 42.0,
+      "DespawnDistance": 64.0,
+      "SpawnInterval": 2.5,
+      "MaxSpawnsPerTick": 1,
+      "PointCooldown": 12.0,
+      "ViewHalfAngleDeg": 55.0,
+      "Seed": 1
+    }
+  },
+  {
+    "Type": "BP_Horde_TSL_ZombieCluster_C",
+    "Name": "Table_NorthLot",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "ArchetypeWeights": [
+        {
+          "Key": "Walker_Burning",
+          "Value": 3
+        },
+        {
+          "Key": "Runner_Burning",
+          "Value": 1
+        }
+      ],
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.4"
+      },
+      "SpawnPoints": [
+        {
+          "ObjectPath": "InventedLayout.11"
+        },
+        {
+          "ObjectPath": "InventedLayout.13"
+        },
+        {
+          "ObjectPath": "InventedLayout.34"
+        }
+      ]
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Table_NorthLot_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 0,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_Horde_TSL_ZombieCluster_C",
+    "Name": "Table_SouthLot",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "ArchetypeWeights": [
+        {
+          "Key": "Walker_Fireman",
+          "Value": 2
+        },
+        {
+          "Key": "Runner_Fireman",
+          "Value": 2
+        },
+        {
+          "Key": "NotARealZombie",
+          "Value": 9
+        }
+      ],
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.6"
+      },
+      "SpawnPoints": [
+        {
+          "ObjectPath": "InventedLayout.15"
+        },
+        {
+          "ObjectPath": "InventedLayout.17"
+        }
+      ]
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Table_SouthLot_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 0,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_Horde_TSL_ZombieCluster_C",
+    "Name": "Table_WestLot",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "ArchetypeWeights": [
+        {
+          "Key": "Walker_Shocking",
+          "Value": 1
+        },
+        {
+          "Key": "Runner_Shocking",
+          "Value": 1
+        }
+      ],
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.8"
+      },
+      "SpawnPoints": [
+        {
+          "ObjectPath": "InventedLayout.19"
+        },
+        {
+          "ObjectPath": "InventedLayout.21"
+        },
+        {
+          "ObjectPath": "InventedLayout.31"
+        }
+      ]
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Table_WestLot_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 0,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_Horde_TSL_ZombieCluster_C",
+    "Name": "Table_EastLot",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "ArchetypeWeights": [
+        {
+          "Key": "Walker_Caustic",
+          "Value": 4
+        },
+        {
+          "Key": "Runner_Caustic",
+          "Value": 1
+        }
+      ],
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.10"
+      },
+      "SpawnPoints": [
+        {
+          "ObjectPath": "InventedLayout.23"
+        },
+        {
+          "ObjectPath": "InventedLayout.25"
+        },
+        {
+          "ObjectPath": "InventedLayout.36"
+        }
+      ]
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Table_EastLot_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 0,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_North_A",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.12"
+      },
+      "Archetype": "Walker_Burning",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.3"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_North_A_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 1200,
+        "Y": -400,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 20,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_North_B",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.14"
+      },
+      "Archetype": "Runner_Burning",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.3"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_North_B_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": -1600,
+        "Y": 200,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": -15,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_South_A",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.16"
+      },
+      "Archetype": "Walker_Fireman",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.5"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_South_A_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 800,
+        "Y": 2200,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 5,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_South_B",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.18"
+      },
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.5"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_South_B_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": -2200,
+        "Y": -800,
+        "Z": 40
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_West_A",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.20"
+      },
+      "Archetype": "Walker_Shocking",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.7"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_West_A_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 2800,
+        "Y": 1000,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 40,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_West_B",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.22"
+      },
+      "Archetype": "Runner_Caustic",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.7"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_West_B_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 400,
+        "Y": -2800,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": -30,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_East_A",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.24"
+      },
+      "Archetype": "Walker_Spiky",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.9"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_East_A_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": -3000,
+        "Y": 1400,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 12,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_East_B",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.26"
+      },
+      "Archetype": "Walker_Vicious",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.9"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_East_B_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 1800,
+        "Y": -2600,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 8,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_Ring_A",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.28"
+      },
+      "Archetype": "Walker_FuelTank",
+      "SpawnTable": "Table_NorthLot"
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_Ring_A_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 1000,
+        "Y": 1400,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 0,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_Activity_Feasting_C",
+    "Name": "Feast_One",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.30"
+      },
+      "Archetype": "Walker_WaterTank",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.5"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Feast_One_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": -1200,
+        "Y": 2800,
+        "Z": 50
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 45,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_Offset",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.33"
+      },
+      "Archetype": "Runner_Spiky",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.7"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_Offset_Parent",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 2000,
+        "Y": 1500,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 0,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_Offset_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 100,
+        "Y": 0,
+        "Z": 0
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 90,
+        "Roll": 0
+      },
+      "AttachParent": {
+        "ObjectPath": "InventedLayout.32"
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_Filled",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.35"
+      },
+      "Archetype": "Walker_GrenadeVest"
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_Filled_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 2400,
+        "Y": 600,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 0,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_DefaultLoc",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.37"
+      },
+      "Archetype": "Walker_Radio",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.9"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_DefaultLoc_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {}
+  },
+  {
+    "Type": "BP_InventedMarker_C",
+    "Name": "Marker_Unused",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.39"
+      },
+      "Archetype": "Walker_Corrosive",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.3"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Marker_Unused_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 5000,
+        "Y": 5000,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 10,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_North_C",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.41"
+      },
+      "Archetype": "Walker_RiotGear_Light",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.3"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_North_C_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": -900,
+        "Y": 900,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 25,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_South_C",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.43"
+      },
+      "Archetype": "Walker_InsectSwarm",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.5"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_South_C_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 2200,
+        "Y": -1200,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": -8,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_West_C",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.45"
+      },
+      "Archetype": "Runner_Vicious",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.7"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_West_C_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": -800,
+        "Y": -2200,
+        "Z": 40
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": 60,
+        "Roll": 0
+      }
+    }
+  },
+  {
+    "Type": "BP_ZombieSpawnPoint_C",
+    "Name": "Point_East_C",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RootComponent": {
+        "ObjectPath": "InventedLayout.47"
+      },
+      "Archetype": "Walker_RiotGear_Heavy",
+      "SpawnTable": {
+        "ObjectPath": "InventedLayout.9"
+      }
+    }
+  },
+  {
+    "Type": "SceneComponent",
+    "Name": "Point_East_C_Root",
+    "Outer": {
+      "ObjectName": "Package'InventedLayout'"
+    },
+    "Properties": {
+      "RelativeLocation": {
+        "X": 1400,
+        "Y": 2600,
+        "Z": 45
+      },
+      "RelativeRotation": {
+        "Pitch": 0,
+        "Yaw": -20,
+        "Roll": 0
+      }
+    }
+  }
+]

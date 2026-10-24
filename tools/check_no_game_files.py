@@ -10,7 +10,12 @@ game's own namespaces), then copy this file to tools/ and the pre-commit hook to
 Usage:
   python tools/check_no_game_files.py            # every tracked file
   python tools/check_no_game_files.py --staged   # what is about to be committed
+  python tools/check_no_game_files.py --commits SHA...   # files each commit adds or changes (pre-push)
+
+Symlinks (git mode 120000) are rejected in every mode: a link can point at the game install.
 """
+from __future__ import annotations
+
 import re
 import subprocess
 import sys
@@ -47,12 +52,39 @@ def git(*args: str) -> bytes:
     return subprocess.run(["git", *args], check=True, capture_output=True).stdout
 
 
-def files_to_check(staged: bool) -> list[str]:
-    out = git("diff", "--cached", "--name-only", "--diff-filter=ACMR", "-z") if staged else git("ls-files", "-z")
-    return [p for p in out.decode("utf-8").split("\0") if p]
+def files_to_check(staged: bool, commit: str | None = None) -> list[tuple[str, str]]:
+    """(git mode, path) of every file added or changed by the commit / the index, or tracked."""
+    if commit or staged:
+        if commit:
+            out = git("diff-tree", "-r", "--root", "--no-commit-id", "--raw", "--diff-filter=ACMRT", "-z", commit)
+        else:
+            out = git("diff", "--cached", "--raw", "--diff-filter=ACMRT", "-z")
+        parts = out.decode("utf-8").split("\0")
+        files = []
+        i = 0
+        while i < len(parts) - 1:
+            meta = parts[i].split()
+            if not meta:
+                i += 1
+                continue
+            new_mode, status = meta[1], meta[4]
+            # Renames and copies carry two paths; the second is the new one.
+            path = parts[i + 2] if status[0] in "RC" else parts[i + 1]
+            files.append((new_mode, path))
+            i += 3 if status[0] in "RC" else 2
+        return files
+    out = git("ls-files", "-s", "-z")
+    files = []
+    for entry in out.decode("utf-8").split("\0"):
+        if entry:
+            meta, path = entry.split("\t", 1)
+            files.append((meta.split()[0], path))
+    return files
 
 
-def read(path: str, staged: bool) -> bytes:
+def read(path: str, staged: bool, commit: str | None = None) -> bytes:
+    if commit:
+        return git("show", f"{commit}:{path}")
     if staged:
         return git("show", f":{path}")
     with open(path, "rb") as f:
@@ -84,15 +116,30 @@ def problems_in(path: str, data: bytes) -> list[str]:
     return found
 
 
-def main() -> int:
-    staged = "--staged" in sys.argv[1:]
+def check(staged: bool, commit: str | None = None) -> list[str]:
+    where = f"{commit[:7]} " if commit else ""
     bad = []
-    for path in files_to_check(staged):
+    for mode, path in files_to_check(staged, commit):
+        if mode == "120000":
+            bad.append(f"  {where}{path}: symlink (git mode 120000); commit the file itself, not a link")
+            continue
         try:
-            data = read(path, staged)
+            data = read(path, staged, commit)
         except (OSError, subprocess.CalledProcessError):
             continue
-        bad += [f"  {path}: {p}" for p in problems_in(path, data)]
+        bad += [f"  {where}{path}: {p}" for p in problems_in(path, data)]
+    return bad
+
+
+def main() -> int:
+    args = sys.argv[1:]
+    staged = "--staged" in args
+    bad = []
+    if "--commits" in args:
+        for commit in args[args.index("--commits") + 1:]:
+            bad += check(False, commit)
+    else:
+        bad = check(staged)
     if bad:
         print("Blocked: these files must not be in the repo.", file=sys.stderr)
         print("\n".join(bad), file=sys.stderr)

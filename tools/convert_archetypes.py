@@ -2,14 +2,22 @@
 
 Input:  extracted\\json\\...  (local dumps of the user's own install)
 Output: game\\data\\archetypes.json
+Set DI2_ROOT to use another root instead of . (same layout under it), e.g. on the box.
 """
 import json
+import os
 from pathlib import Path
 
 ROOT = Path(r"extracted\json\DeadIsland\Content")
 OUT = Path(r"game\data\archetypes.json")
 ASSETS = Path(r"game\assets\di2")
 MONTAGES = Path(r"game\data\montages_zombie.json")   # tools/build_zombie_montages.py
+if os.environ.get("DI2_ROOT"):
+    _R = Path(os.environ["DI2_ROOT"])
+    ROOT = _R / "extracted" / "json" / "DeadIsland" / "Content"
+    OUT = _R / "game" / "data" / "archetypes.json"
+    ASSETS = _R / "game" / "assets" / "di2"
+    MONTAGES = _R / "game" / "data" / "montages_zombie.json"
 
 # Locomotion and attacks aren't in MultiPartHealth. Families with their own DI2 body (BODIES) take their
 # speeds from the root motion of the clips that body plays, as measured by tools/merge_anims.py into

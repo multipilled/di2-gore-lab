@@ -6,3 +6,5 @@ reloadable = true
 [libraries]
 windows.debug.x86_64 = "res://../rust/target/debug/gore_godot.dll"
 windows.release.x86_64 = "res://../rust/target/release/gore_godot.dll"
+linux.debug.x86_64 = "res://../rust/target/debug/libgore_godot.so"
+linux.release.x86_64 = "res://../rust/target/release/libgore_godot.so"

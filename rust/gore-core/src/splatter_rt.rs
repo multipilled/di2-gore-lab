@@ -310,10 +310,10 @@ impl SplatterRt {
         let mut h_set: Vec<u32> = Vec::with_capacity(self.touched.len() * 3);
         for i in 0..self.touched.len() {
             let k = self.touched[i] as usize;
-            let (x, y) = (k % res, k / res);
-            for (nx, ok) in [(x, true), (x.wrapping_sub(1), x > 0), (x + 1, x + 1 < res)] {
-                let j = y * res + nx;
-                if ok && self.mark[j] != g {
+            let x = k % res;
+            // The neighbour index is formed only once its bounds check has passed.
+            for j in [Some(k), (x > 0).then(|| k - 1), (x + 1 < res).then(|| k + 1)].into_iter().flatten() {
+                if self.mark[j] != g {
                     self.mark[j] = g;
                     h_set.push(j as u32);
                 }
@@ -330,10 +330,9 @@ impl SplatterRt {
         let mut v_set: Vec<u32> = Vec::with_capacity(h_set.len() * 3);
         for &k in &h_set {
             let k = k as usize;
-            let (x, y) = (k % res, k / res);
-            for (ny, ok) in [(y, true), (y.wrapping_sub(1), y > 0), (y + 1, y + 1 < res)] {
-                let j = ny * res + x;
-                if ok && self.mark[j] != g {
+            let y = k / res;
+            for j in [Some(k), (y > 0).then(|| k - res), (y + 1 < res).then(|| k + res)].into_iter().flatten() {
+                if self.mark[j] != g {
                     self.mark[j] = g;
                     v_set.push(j as u32);
                 }
@@ -358,12 +357,13 @@ impl SplatterRt {
             if c0[3] == 255 {
                 continue;
             }
-            let n = if horizontal { [(x.wrapping_sub(1), y), (x + 1, y)] } else { [(x, y.wrapping_sub(1)), (x, y + 1)] };
-            for (nx, ny) in n {
-                if nx >= res || ny >= res {
-                    continue;
-                }
-                let j = ny * res + nx;
+            // Left then right (H) or up then down (V), each index formed only inside the target.
+            let n = if horizontal {
+                [(x > 0).then(|| k - 1), (x + 1 < res).then(|| k + 1)]
+            } else {
+                [(y > 0).then(|| k - res), (y + 1 < res).then(|| k + res)]
+            };
+            for j in n.into_iter().flatten() {
                 if c0[3] < self.disp[j][3] {
                     // * sign(a): a > 0 here
                     c0 = self.disp[j];
@@ -425,5 +425,44 @@ mod tests {
         let edge = r.x1;
         rt.dilate(r);
         assert!(rt.disp[32 * 64 + edge][0] > 0 && rt.disp[32 * 64 + edge][3] < 255);
+    }
+
+    /// One covered texel T, dilated alone, at every corner and mid-edge of 1x1, 2x2 and 8x8 targets. Worked by
+    /// hand from §3.7: the H pass fills T's left / right neighbours with T's colour at alpha 128; the V pass
+    /// then visits T, those neighbours and the texels above / below all of them, copies the strictly higher
+    /// alpha neighbour (T at 255 or an H result at 128) and writes alpha 0. So the 3 x 3 block around T,
+    /// clipped to the target, ends with T's colours at alpha 0, T keeps its own texel at alpha 255, and every
+    /// other texel stays empty. Must not panic in a debug build (the old code overflowed at x == 0 / y == 0).
+    #[test]
+    fn dilate_corners_and_edges_by_hand() {
+        const W: [u8; 4] = [10, 20, 30, 255];
+        const D: [u8; 4] = [40, 50, 60, 70];
+        for res in [1usize, 2, 8] {
+            let (m, e) = (res / 2, res - 1);
+            let spots = [(0, 0), (e, 0), (0, e), (e, e), (m, 0), (m, e), (0, m), (e, m)];
+            for (tx, ty) in spots {
+                let mut rt = SplatterRt::new(res);
+                let t = ty * res + tx;
+                rt.disp[t] = W;
+                rt.dif[t] = D;
+                rt.touched = vec![t as u32];
+                rt.dilate(Rect { x0: tx, y0: ty, x1: tx + 1, y1: ty + 1 });
+                for y in 0..res {
+                    for x in 0..res {
+                        let k = y * res + x;
+                        let near = x.abs_diff(tx) <= 1 && y.abs_diff(ty) <= 1;
+                        let (want_w, want_d) = if k == t {
+                            (W, D)
+                        } else if near {
+                            ([10, 20, 30, 0], D)
+                        } else {
+                            ([0; 4], [0; 4])
+                        };
+                        assert_eq!(rt.disp[k], want_w, "disp res {res} T ({tx},{ty}) at ({x},{y})");
+                        assert_eq!(rt.dif[k], want_d, "dif res {res} T ({tx},{ty}) at ({x},{y})");
+                    }
+                }
+            }
+        }
     }
 }

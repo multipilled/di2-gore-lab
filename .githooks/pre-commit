@@ -1,11 +1,9 @@
 #!/bin/sh
-# Blocks commits that include game data or decompiled code. Enable with:
+# Blocks commits that stage game data, decompiled code or a symlink. Enable once per clone with:
 #   git config core.hooksPath .githooks
-# The Microsoft Store `python` stub hangs, so a real interpreter is preferred (py launcher, then python3).
-for PY in py python3 python; do
-  if command -v "$PY" >/dev/null 2>&1 && timeout 5 "$PY" -c "import sys" >/dev/null 2>&1; then
-    exec "$PY" -B tools/check_no_game_files.py --staged
-  fi
-done
-echo "pre-commit: no Python found to run tools/check_no_game_files.py" >&2
-exit 1
+HOOK_NAME=pre-commit
+. "$(dirname "$0")/_python.sh"
+find_python
+cd "$(git rev-parse --show-toplevel)" || exit 1
+# shellcheck disable=SC2086
+exec $PY -B tools/check_no_game_files.py --staged

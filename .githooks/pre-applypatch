@@ -1,0 +1,8 @@
+#!/bin/sh
+# git am skips pre-commit; this runs the same guard on each applied patch before it is committed.
+HOOK_NAME=pre-applypatch
+. "$(dirname "$0")/_python.sh"
+find_python
+cd "$(git rev-parse --show-toplevel)" || exit 1
+# shellcheck disable=SC2086
+exec $PY -B tools/check_no_game_files.py --staged

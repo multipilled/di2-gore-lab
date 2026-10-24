@@ -1192,19 +1192,36 @@ mod tests {
     use serde_json::Value;
 
     const FIXTURES: &str = include_str!("../../../tools/re_dismember/fixtures/dismember_fixtures.json");
-    const BODIES: [(&str, &str); 4] = [
-        ("walker", include_str!("../../../game/assets/di2/walker/walker.dismember.json")),
-        ("runner", include_str!("../../../game/assets/di2/runner/runner.dismember.json")),
-        ("shambler", include_str!("../../../game/assets/di2/shambler/shambler.dismember.json")),
-        ("thug", include_str!("../../../game/assets/di2/thug/thug.dismember.json")),
-    ];
+    // The DI2 bodies are gitignored game data (game/assets/di2/<body>/<body>.dismember.json). With the
+    // `game-data` feature they are compiled in; without it they are read at run time, so a fresh clone
+    // still compiles. Every test that needs them is ignored unless the feature is on.
+    const BODY_NAMES: [&str; 4] = ["walker", "runner", "shambler", "thug"];
+
+    #[cfg(feature = "game-data")]
+    fn body_text(name: &str) -> String {
+        const BODIES: [(&str, &str); 4] = [
+            ("walker", include_str!("../../../game/assets/di2/walker/walker.dismember.json")),
+            ("runner", include_str!("../../../game/assets/di2/runner/runner.dismember.json")),
+            ("shambler", include_str!("../../../game/assets/di2/shambler/shambler.dismember.json")),
+            ("thug", include_str!("../../../game/assets/di2/thug/thug.dismember.json")),
+        ];
+        BODIES.iter().find(|b| b.0 == name).unwrap_or_else(|| panic!("no body {name}")).1.to_string()
+    }
+
+    #[cfg(not(feature = "game-data"))]
+    fn body_text(name: &str) -> String {
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(format!("../../game/assets/di2/{name}/{name}.dismember.json"));
+        std::fs::read_to_string(&path).unwrap_or_else(|e| {
+            panic!("needs game data: {} ({e}). Export the DI2 bodies locally (tests needing them are ignored without --features game-data).", path.display())
+        })
+    }
 
     fn fx() -> Value {
         serde_json::from_str(FIXTURES).unwrap()
     }
 
     fn body(name: &str) -> DismemberData {
-        DismemberData::from_json(BODIES.iter().find(|b| b.0 == name).unwrap().1).unwrap()
+        DismemberData::from_json(&body_text(name)).unwrap()
     }
 
     fn f(v: &Value) -> f64 {
@@ -1293,9 +1310,14 @@ mod tests {
         let i = names.iter().position(|n| n == "upperarm_l").unwrap();
         assert_eq!((topo[i].depth, topo[i].branch), (7, 2));
         assert_eq!(names[topo[i].break_bone as usize], "lowerarm_l");
+    }
+
+    #[test]
+    #[cfg_attr(not(feature = "game-data"), ignore = "needs game data")]
+    fn topology_matches_exported_bodies() {
         // every exported body: the stored topology (dismember_ref.bone_topology) equals the port's
-        for (name, text) in BODIES {
-            let raw: Value = serde_json::from_str(text).unwrap();
+        for name in BODY_NAMES {
+            let raw: Value = serde_json::from_str(&body_text(name)).unwrap();
             let d = body(name);
             for (i, b) in d.topo.iter().enumerate() {
                 let r = &raw["bones"];
@@ -1336,9 +1358,10 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(not(feature = "game-data"), ignore = "needs game data")]
     fn placement_matches_reference_in_gltf_space() {
         let fx = fx();
-        let datas: Vec<DismemberData> = BODIES.iter().map(|b| body(b.0)).collect();
+        let datas: Vec<DismemberData> = BODY_NAMES.iter().map(|b| body(b)).collect();
         let mut n = 0;
         for c in fx["place"].as_array().unwrap() {
             let d = datas.iter().find(|d| d.body == c["body"].as_str().unwrap()).unwrap();
@@ -1380,6 +1403,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(not(feature = "game-data"), ignore = "needs game data")]
     fn region_bones_and_sockets() {
         let d = body("walker");
         let b = |n: &str| d.bone(n).unwrap();
@@ -1414,6 +1438,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(not(feature = "game-data"), ignore = "needs game data")]
     fn classification_matches_reference() {
         let fx = fx();
         for sc in fx["classify"].as_array().unwrap() {
@@ -1442,6 +1467,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(not(feature = "game-data"), ignore = "needs game data")]
     fn section_helpers_split_and_break() {
         let d = body("walker");
         let ua = d.bone("upperarm_l").unwrap();
@@ -1476,6 +1502,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(not(feature = "game-data"), ignore = "needs game data")]
     fn bone_break_matches_reference() {
         let fx = fx();
         let (mut n, mut steps) = (0, 0);
@@ -1535,6 +1562,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(not(feature = "game-data"), ignore = "needs game data")]
     fn radial_stamp_matches_reference() {
         let fx = fx();
         let r = &fx["radial"];

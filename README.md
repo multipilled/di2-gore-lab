@@ -4,7 +4,7 @@ A personal test bed. It recreates Dead Island 2's gore system (internally "Splat
 
 **Personal testing only.** `game/assets/di2/` and `extracted/` hold content pulled from your own DI2 install. Don't share them or commit them. The `.gitignore` already excludes them. The Rust core and the tools are original code.
 
-**Progress: about 46% of the goal** (a fully playable showcase build on Horde map NH_04 with the full UI, gameplay, gore, every zombie variant and the whole map rendered as in game). Milestone table under [Status](#status).
+**Progress: about 48% of the goal** (a fully playable showcase build on Horde map NH_04 with the full UI, gameplay, gore, every zombie variant and the whole map rendered as in game). Milestone table under [Status](#status).
 
 ## Run
 
@@ -19,8 +19,12 @@ A personal test bed. It recreates Dead Island 2's gore system (internally "Splat
 | `tools/re_explosion/decomp.sh <name> <addr...>` | Headless Ghidra decompile (extracted/ghidra project) for the explosion RE |
 | `tools/run_all_tests.sh [flesh autotest combat weapon]` | Every autotest in the background (off-screen, CPU-throttled); logs in `game/test_out/logs/` |
 | `tools/with_cpu.sh <who> <cmd>` | Shared CPU budget for heavy jobs: 2 at a time, below-normal priority |
-| `cd rust && cargo test -p gore-core` | 16 unit tests of the gore and zombie rules |
+| `cd rust && cargo test -p gore-core` | Unit tests of the gore rules, plus the horde director (caps, pacing, fixed seed, stand-in records) |
+| `cd rust && cargo test -p gore-core --features game-data -- --nocapture` | Also runs the tests that need your local DI2 data (`game/assets/di2`, `game/data/archetypes.json`); without the feature they are listed as ignored |
 | `cd rust && cargo build -p gore-godot` | Rebuilds the Godot extension after Rust changes |
+| `cargo run --manifest-path rust/Cargo.toml -p gore-core --bin horde_report -- <cue4parse-json-dir>` | Read-only spawn report. Prints to stdout and writes no files |
+
+Linux: `game/gore.gdextension` also lists `rust/target/{debug,release}/libgore_godot.so`. The release entry is verified as 'release binary loads; feature-tag selection untested until an export template exists'.
 
 ### Controls
 - **Moving:** WASD to move, Shift to sprint, Space to jump, mouse to look.
@@ -28,6 +32,16 @@ A personal test bed. It recreates Dead Island 2's gore system (internally "Splat
 - **Weapons:** 1-8 select loadout slots, mouse wheel to switch. **F3 opens the catalogue of every DI2 weapon** (159 campaign archetypes): Up/Down/PgUp/PgDn to browse, Enter puts it in the current slot. R reloads, T repairs, M cycles the weapon mod (none, fire, acid, shock, bleed).
 - **Testing:** K spawns a zombie, J changes which archetype K spawns (all 22 DI2 types with their DI2 stats; the Runner, Shambler and Thug families spawn on their own DI2 bodies, the rest on the Walker body). Z toggles slow motion, F2 shows limb health for the zombie under your crosshair, F1 hides the help.
 - **Automated runs:** `--combattest=<dir>` drives Dani's whole kit; `--weapontest=<dir> [--only=<class_id>]` equips one weapon of every DI2 class and logs the DI2 clip each action played and whether it hit.
+
+## Dev setup
+
+Once per clone, turn on the repo's git hooks:
+
+```
+git config core.hooksPath .githooks
+```
+
+`pre-commit` (and `pre-applypatch` for `git am`) block staged game files, decompiled code and symlinks. `pre-push` checks only the commits being pushed and also rejects Cursor Agent authors and any author or committer email that isn't a `users.noreply.github.com` address; commit-message trailers such as `Co-authored-by` are allowed. The hooks need Python 3.8+ and try `python3`, then `python`, then `py -3`.
 
 ## What comes from DI2, and what is recreated
 
@@ -88,9 +102,10 @@ A personal test bed. It recreates Dead Island 2's gore system (internally "Splat
 - Zombies steer straight at you, with no navmesh.
 
 ## Status
-A test bed, about 46% of the current goal: a fully playable showcase build on Horde map NH_04 (Bel-Air) with the
+A test bed, about 48% of the current goal: a fully playable showcase build on Horde map NH_04 (Bel-Air) with the
 full UI, gameplay, gore, every zombie variant and the whole map rendered as in game. Done so far: all 22 elemental and
 hazard variants, the specials' abilities, the gameplay and UI audit, and the NH_04 map tiles, landscape and foliage.
+NH_04 population uses an invented stand-in layout until a CUE4Parse export of the map is on disk (see the horde report command above).
 Next: map performance (HLOD).
 
 | Milestone | Weight | Done |
@@ -99,13 +114,13 @@ Next: map performance (HLOD).
 | Player gameplay: movement, melee and ranged, weapons and mods, throwables, skills, progression | 14 | 40% |
 | Gore: FLESH splatter, dismemberment, viscera, damage model and statuses, blood fluids | 13 | 85% |
 | Every zombie variant: look, animation, reactions, AI and abilities | 20 | 60% |
-| Variants spread across the map (spawners, horde director) | 5 | 0% |
+| Variants spread across the map (spawners, horde director) | 5 | 40% |
 | The whole map from the game's assets: tiles, landscape, foliage, props, decals, collision | 13 | 50% |
 | Rendering parity: sky, environment shaders, shadows, reflections, wet surfaces, lighting, post | 14 | 30% |
 | Performance with crowds on the full map | 6 | 25% |
 | Weapon and world VFX, audio | 6 | 55% |
 | Showcase capture | 2 | 0% |
-| **Overall** | 100 | **~46%** |
+| **Overall** | 100 | **~48%** |
 
 Want to help? See [CONTRIBUTING.md](CONTRIBUTING.md).
 

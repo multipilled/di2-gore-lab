@@ -4,6 +4,7 @@
 //!   (data-driven by [`archetype::Archetype`], e.g. DI2's Walker).
 //! - [`wounds::WoundField`]: capsule wounds in bind-pose space that shaders turn into layered gore.
 //! - [`brain::Brain`]: zombie perception, chase, attack cards, stagger and crawling.
+//! - [`horde`]: map spawn records and a capped horde director.
 //! - [`expr::Expr`]: DI2-style knowledge-base expressions for survival rules.
 //!
 //! Hosts (Godot, Bevy, Unreal, ...) map their skeleton into [`anatomy::Skeleton`], convert hit
@@ -16,6 +17,8 @@ pub mod damage;
 pub mod dismember;
 pub mod expr;
 pub mod health;
+pub mod horde;
+pub mod spawn_read;
 pub mod splatter;
 pub mod splatter_rt;
 pub mod stability;
